@@ -1,6 +1,6 @@
 # Librdkafka Interceptors
 
-Source for Kafka Summit Bangalore 2024 talk on [librdkafka masterclass](https://www.confluent.io/events/kafka-summit-bangalore-2024/interceptor-masterclass-for-librdkafka-clients/).
+Source for Kafka Summit Bangalore 2024 talk on [librdkafka interceptor masterclass](https://www.confluent.io/events/kafka-summit-bangalore-2024/interceptor-masterclass-for-librdkafka-clients/).
 
 ![audit-use-case](assets/images/LibrdKafka%20Interceptors%20Example.png)
 
@@ -47,7 +47,7 @@ cp test/.env.example test/.env
 
 # Update the bootstrap server, username and password in test/.env
 
-set -a; source test/.env; set +a
+set -a; source test/.env; set +a; source test/.env
 ```
 
 #### Run producer
@@ -73,7 +73,7 @@ kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --prop
 #### Test audit data
 
 ```bash
-echo -e "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$AUDIT_SASL_USERNAME\" password=\"$AUDIT_SASL_PASSWORD\";"
+echo -e "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$AUDIT_SASL_USERNAME\" password=\"$AUDIT_SASL_PASSWORD\";" > client.properties
 
 kafka-console-consumer --bootstrap-server $AUDIT_BOOTSTRAP_SERVER --consumer.config client.properties --from-beginning --property print.key=true --topic audit_topic
 ```

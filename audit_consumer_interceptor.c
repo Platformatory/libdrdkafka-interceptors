@@ -8,7 +8,6 @@
 #include <jansson.h>
 
 struct ici {
-        rd_kafka_conf_t *conf; /**< Interceptor config */
         rd_kafka_conf_t *audit_producer_conf;         /**< Interceptor-specific config */
         char *audit_topic;
 };
@@ -115,8 +114,6 @@ static rd_kafka_resp_err_t on_consume(rd_kafka_t *rk, rd_kafka_message_t *rkmess
 }
 
 static void ici_destroy(struct ici *ici) {
-    if (ici->conf)
-            rd_kafka_conf_destroy(ici->conf);
     if (ici->audit_producer_conf)
             free(ici->audit_producer_conf);
     if (ici->audit_topic)
@@ -180,10 +177,7 @@ static void conf_init0(rd_kafka_conf_t *conf) {
     struct ici *ici;
 
     ici = calloc(1, sizeof(*ici));
-    ici->conf = rd_kafka_conf_new();
     ici->audit_producer_conf = rd_kafka_conf_new();
-
-    // printf("ici %p with ici->conf %p", ici, ici->conf);
     
     rd_kafka_conf_interceptor_add_on_new(conf, __FILE__, on_new, ici);
     rd_kafka_conf_interceptor_add_on_conf_set(conf, __FILE__, on_conf_set, ici);
