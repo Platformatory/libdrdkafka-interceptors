@@ -6,6 +6,14 @@ Source for Kafka Summit Bangalore 2024 talk on [librdkafka interceptor mastercla
 
 ## Setup
 
+### Install dependencies
+
+For ubuntu -
+
+```bash
+sudo apt install librdkafka-dev libjansson-dev uuid-dev
+```
+
 ### Kafka cluster
 
 To run the example, you will need a kafka cluster running. The most simple way to get a Kafka cluster is using [docker](https://kafka.apache.org/quickstart) or [Confluent Cloud](https://confluent.cloud/)
@@ -21,7 +29,7 @@ docker run -d -p 9092:9092 apache/kafka:3.7.0
 #### Producer interceptor
 
 ```bash
-gcc -g -o audit_producer_interceptor.so -shared -fPIC audit_producer_interceptor.c -lrdkafka -lcrypto -ljansson -luuid
+gcc -g -o audit_producer_interceptor.so -shared -fPIC audit_producer_interceptor.c -lrdkafka -ljansson -luuid
 ```
 
 #### Consumer interceptor

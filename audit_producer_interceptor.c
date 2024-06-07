@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <librdkafka/rdkafka.h>
-#include <openssl/hmac.h>
-#include <openssl/sha.h>
 #include <jansson.h>
 #include <uuid/uuid.h>
 
@@ -80,11 +78,10 @@ static rd_kafka_resp_err_t on_send(rd_kafka_t *rk, rd_kafka_message_t *rkmessage
     }
 
     char *correlation_id = generate_correlation_id();
-    const char *key = "your_secret_key_here";
 
     rd_kafka_headers_t *headers;
     rd_kafka_message_headers(rkmessage, &headers);
-    if (headers) {
+    if (!headers) {
         headers = rd_kafka_headers_new(8);
     }
 
